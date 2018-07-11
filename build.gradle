@@ -1,0 +1,19 @@
+plugins {
+    id 'org.jetbrains.intellij' version '0.3.4'
+}
+
+group 'guru.qas'
+version '0.0.1'
+
+intellij {
+    version '2018.1.5'
+}
+patchPluginXml {
+    changeNotes """
+      Add change notes here.<br>
+      <em>most HTML tags may be used</em>"""
+}
+publishPlugin {
+    username intellijPublishUsername
+    password intellijPublishPassword
+}
