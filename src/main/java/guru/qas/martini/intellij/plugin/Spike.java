@@ -16,12 +16,14 @@ limitations under the License.
 
 package guru.qas.martini.intellij.plugin;
 
+import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
 import org.jetbrains.annotations.NotNull;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.intellij.openapi.application.Application;
@@ -41,6 +43,9 @@ import com.intellij.psi.search.SearchScope;
 import com.intellij.psi.search.searches.MethodReferencesSearch;
 import com.intellij.psi.search.searches.ReferencesSearch;
 import com.intellij.util.Processor;
+import com.intellij.util.Query;
+
+import guru.qas.martini.intellij.plugin.gherkin.psi.GherkinFileType;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.intellij.psi.PsiModifier.PUBLIC;
@@ -71,9 +76,14 @@ public class Spike extends QueryExecutorBase<PsiReference, MethodReferencesSearc
 		checkNotNull(parameters, "null MethodReferencesSearch.SearchParameters");
 		checkNotNull(consumer, "null Processor");
 
+		System.out.println("GOT A PROCESS QUERY");
+
 		SearchScope scope = parameters.getEffectiveSearchScope();
+		System.out.println("SEARCH SCOPE IS " + scope);
+
 		if (GlobalSearchScope.class.isInstance(scope)) {
 			GlobalSearchScope globalSearchScope = GlobalSearchScope.class.cast(scope);
+			System.out.println("GOT GLOBAL SEARCH SCOPE");
 			processQuery(parameters, consumer, globalSearchScope);
 		}
 	}
@@ -83,18 +93,40 @@ public class Spike extends QueryExecutorBase<PsiReference, MethodReferencesSearc
 		Processor<PsiReference> consumer,
 		GlobalSearchScope scope
 	) {
+		System.out.println("in processQuery()");
 		PsiMethod method = parameters.getMethod();
+		System.out.println("method is " + method);
+
 		PsiAnnotation annotation = method.hasModifierProperty(PUBLIC) ? getAnnotation(method).orElse(null) : null;
+		System.out.println("annotation is " + annotation);
+
 		String regex = null == annotation ? null : getPatternFromStepDefinition(annotation).orElse(null);
+		System.out.println("regex is " + regex);
+
 		String word = null == regex ? null : RegEx.getTheBiggestWordToSearchByIndex(regex);
+		System.out.println("word is " + word);
+
 		if (null == word || word.isEmpty()) {
+			System.out.println("No WORD");
 			return;
 		}
 
-		GlobalSearchScope restrictedScope = GlobalSearchScope.getScopeRestrictedByFileTypes(scope, FeatureFileType.getInstance());
+		GlobalSearchScope restrictedScope = GlobalSearchScope.getScopeRestrictedByFileTypes(scope, GherkinFileType.getInstance());
 		SearchRequestCollector optimizer = parameters.getOptimizer();
 		ReferencesSearch.SearchParameters searchParameters = new ReferencesSearch.SearchParameters(method, restrictedScope, false, optimizer);
-		ReferencesSearch.search(searchParameters).forEach(consumer);
+		System.out.println("ABOUT TO SEARCH, CONSUMER IS : " + consumer);
+
+		Query<PsiReference> references = ReferencesSearch.search(searchParameters);
+		Collection<PsiReference> all = references.findAll();
+		System.out.println("DONE SEARCHING, GOT REFERENCES: " + Joiner.on("\n").join(all));
+
+		all.forEach(r -> {
+			System.out.println("canonicalText: " + r.getCanonicalText());
+			System.out.println("element: " + r.getElement());
+			System.out.println("rangeInElement: " + r.getRangeInElement());
+			System.out.println("variants: " + r.getVariants());
+			consumer.process(r);
+		});
 	}
 
 	private static Optional<PsiAnnotation> getAnnotation(PsiMethod method) {

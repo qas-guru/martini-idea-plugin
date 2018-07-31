@@ -1,55 +1,66 @@
 <idea-plugin>
-    <id>guru.qas.martini-idea-plugin</id>
-    <name>Martini Plugin</name>
-    <version>0.0.1</version>
-    <vendor email="penny.curich@gmail.com" url="https://github.com/qas-guru">Quality Assurance Gurus</vendor>
+	<id>guru.qas.martini-idea-plugin</id>
+	<name>Martini Plugin</name>
+	<version>0.0.1</version>
+	<vendor email="penny.curich@gmail.com" url="https://github.com/qas-guru">Quality Assurance Gurus</vendor>
 
-    <description><![CDATA[
+	<description><![CDATA[
     Martini Support.<br>
     ]]></description>
 
-    <change-notes><![CDATA[
+	<change-notes><![CDATA[
         Release 0.0.1: Initial release.<br>
       ]]>
-    </change-notes>
+	</change-notes>
 
-    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-         on how to target different products -->
-    <!-- uncomment to enable plugin in all products
-    <depends>com.intellij.modules.lang</depends>
-    -->
+	<!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+		 on how to target different products -->
+	<!-- uncomment to enable plugin in all products
+	<depends>com.intellij.modules.lang</depends>
+	-->
 
-    <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
-        <!--<referencesSearch implementation="org.jetbrains.plugins.cucumber.java.steps.search.CucumberJavaStepDefinitionSearch"/>-->
+	<extensions defaultExtensionNs="com.intellij">
+		<fileTypeFactory implementation="guru.qas.martini.intellij.plugin.gherkin.psi.GherkinFileTypeFactory"/>
+		<lang.syntaxHighlighterFactory language="Gherkin"
+									   implementationClass="org.jetbrains.plugins.cucumber.psi.GherkinSyntaxHighlighterFactory"/>
 
-        <!--<methodReferencesSearch implementation="org.jetbrains.plugins.cucumber.java.steps.search.CucumberJavaMethodUsageSearcher"/>-->
-        <methodReferencesSearch implementation="guru.qas.martini.intellij.plugin.Spike"/>
+		<lang.parserDefinition language="Gherkin"
+							   implementationClass="org.jetbrains.plugins.cucumber.psi.GherkinParserDefinition"/>
+		<lang.commenter language="Gherkin" implementationClass="org.jetbrains.plugins.cucumber.psi.GherkinCommenter"/>
+		<lang.psiStructureViewFactory language="Gherkin"
+									  implementationClass="guru.qas.martini.intellij.plugin.gherkin.psi.structure.GherkinStructureViewFactory"/>
+		<lang.formatter language="Gherkin"
+						implementationClass="org.jetbrains.plugins.cucumber.psi.formatter.GherkinFormattingModelBuilder"/>
+		<annotator language="Gherkin"
+				   implementationClass="guru.qas.martini.intellij.plugin.gherkin.psi.annotator.GherkinAnnotator"/>
+		<lang.foldingBuilder language="Gherkin"
+							 implementationClass="org.jetbrains.plugins.cucumber.psi.GherkinFoldingBuilder"/>
+		<langCodeStyleSettingsProvider
+				implementation="org.jetbrains.plugins.cucumber.psi.formatter.GherkinLanguageCodeStyleSettingsProvider"/>
+		<codeStyleSettingsProvider
+				implementation="org.jetbrains.plugins.cucumber.psi.formatter.GherkinCodeStyleSettingsProvider"/>
+
+		<lang.findUsagesProvider language="Gherkin"
+								 implementationClass="org.jetbrains.plugins.cucumber.psi.GherkinFindUsagesProvider"/>
+		<colorSettingsPage implementation="org.jetbrains.plugins.cucumber.psi.GherkinColorsPage"/>
+
+		<renameHandler
+				implementation="org.jetbrains.plugins.cucumber.psi.refactoring.rename.GherkinInplaceRenameHandler"/>
+		<renameHandler implementation="org.jetbrains.plugins.cucumber.psi.refactoring.rename.GherkinStepRenameHandler"/>
 
 
+		<renamePsiElementProcessor
+				implementation="org.jetbrains.plugins.cucumber.psi.refactoring.rename.CucumberStepRenameProcessor"
+				order="first"/>
 
-        <!--<runConfigurationProducer implementation="org.jetbrains.plugins.cucumber.java.run.CucumberJavaFeatureRunConfigurationProducer"/>-->
-        <!--<runConfigurationProducer implementation="org.jetbrains.plugins.cucumber.java.run.CucumberJavaScenarioRunConfigurationProducer"/>-->
-        <!--<runConfigurationProducer implementation="org.jetbrains.plugins.cucumber.java.run.CucumberJavaAllFeaturesInFolderRunConfigurationProducer"/>-->
-        <!--<configurationType implementation="org.jetbrains.plugins.cucumber.java.run.CucumberJavaRunConfigurationType"/>-->
-    <!---->
-        <!--<implicitUsageProvider implementation="org.jetbrains.plugins.cucumber.java.steps.reference.CucumberJavaImplicitUsageProvider"/>-->
-    <!---->
-        <!--<localInspection language="JAVA" shortName="CucumberJavaStepDefClassIsPublic" displayName="Step definition class is not public"-->
-                         <!--groupBundle="org.jetbrains.plugins.cucumber.CucumberBundle" groupKey="cucumber.inspection.group.name" enabledByDefault="true"-->
-                         <!--level="WARNING" implementationClass="org.jetbrains.plugins.cucumber.java.inspections.CucumberJavaStepDefClassIsPublicInspections"/>-->
-        <!--<localInspection language="JAVA" shortName="CucumberJavaStepDefClassInDefaultPackage" displayName="Step definition class is in default package"-->
-                         <!--groupBundle="org.jetbrains.plugins.cucumber.CucumberBundle" groupKey="cucumber.inspection.group.name" enabledByDefault="true"-->
-                         <!--level="WARNING" implementationClass="org.jetbrains.plugins.cucumber.java.inspections.CucumberJavaStepDefClassInDefaultPackageInspection"/>-->
-    <!---->
-        <!--<multiHostInjector implementation="org.jetbrains.plugins.cucumber.java.CucumberJavaInjector"/>-->
-    </extensions>
 
-    <actions>
-        <!-- Add your actions here -->
-        <group id="MartiniPlugin.SampleMenu" text="Greeting" description="Greeting menu">
-            <add-to-group group-id="MainMenu" anchor="last"/>
-            <action id="Myplugin.Textboxes" class="guru.qas.martini.HelloAction" text="Hello" description="Says hello"/>
-        </group>
-    </actions>
+	</extensions>
+
+	<actions>
+		<!-- Add your actions here -->
+		<group id="MartiniPlugin.SampleMenu" text="Greeting" description="Greeting menu">
+			<add-to-group group-id="MainMenu" anchor="last"/>
+			<action id="Myplugin.Textboxes" class="guru.qas.martini.HelloAction" text="Hello" description="Says hello"/>
+		</group>
+	</actions>
 </idea-plugin>

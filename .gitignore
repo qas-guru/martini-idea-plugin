@@ -9,6 +9,7 @@ gradle-app.setting
 !gradle-wrapper.jar
 .gradletasknamecache
 gradle.properties
-
+/out
+/src/main/scratch
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties

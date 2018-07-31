@@ -14,33 +14,36 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package guru.qas.martini.intellij.plugin;
+package guru.qas.martini.intellij.plugin.gherkin.psi;
 
 import javax.swing.Icon;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.plugins.cucumber.psi.GherkinLanguage;
 
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.openapi.fileTypes.LanguageFileType;
+import com.intellij.openapi.util.IconLoader;
 
-public class FeatureFileType implements FileType {
+public class GherkinFileType extends LanguageFileType {
 
-	private static final FeatureFileType INSTANCE = new FeatureFileType();
+	public static final Icon ICON = IconLoader.getIcon("/guru/qas/martini/intellij/plugin/icons/jar-gray.png");
+	private static final GherkinFileType INSTANCE = new GherkinFileType();
 
-	private FeatureFileType() {
+	private GherkinFileType() {
+		super(GherkinLanguage.INSTANCE);
 	}
 
 	@NotNull
 	@Override
 	public String getName() {
-		return "Martini";
+		return "Gherkin";
 	}
 
 	@NotNull
 	@Override
 	public String getDescription() {
-		return "Martini Feature File";
+		return "Gherkin feature file";
 	}
 
 	@NotNull
@@ -52,26 +55,10 @@ public class FeatureFileType implements FileType {
 	@Nullable
 	@Override
 	public Icon getIcon() {
-		return null;
+		return ICON;
 	}
 
-	@Override
-	public boolean isBinary() {
-		return false;
-	}
-
-	@Override
-	public boolean isReadOnly() {
-		return false;
-	}
-
-	@Nullable
-	@Override
-	public String getCharset(@NotNull VirtualFile file, @NotNull byte[] content) {
-		return null;
-	}
-
-	static FeatureFileType getInstance() {
+	public static GherkinFileType getInstance() {
 		return INSTANCE;
 	}
 }
