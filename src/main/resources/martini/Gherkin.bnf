@@ -1,0 +1,20 @@
+{
+  parserClass="guru.qas.martini.gherkin.GherkinParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Gherkin"
+  psiImplClassSuffix="Impl"
+  psiPackage="guru.qas.martini.gherkin.psi"
+  psiImplPackage="guru.qas.martini.gherkin.psi.impl"
+
+  elementTypeHolderClass="guru.qas.martini.gherkin.psi.GherkinTypes"
+  elementTypeClass="guru.qas.martini.gherkin.psi.GherkinElementType"
+  tokenTypeClass="guru.qas.martini.gherkin.psi.GherkinTokenType"
+}
+
+gherkinFile ::= item_*
+
+private item_ ::= (property|COMMENT|CRLF)
+
+property ::= (KEY? SEPARATOR VALUE?) | KEY

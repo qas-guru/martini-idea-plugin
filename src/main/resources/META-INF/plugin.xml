@@ -22,7 +22,9 @@
 
 	<extensions defaultExtensionNs="com.intellij">
 		<fileTypeFactory implementation="guru.qas.martini.gherkin.GherkinFileTypeFactory"/>
+		<lang.parserDefinition language="Gherkin" implementationClass="guru.qas.martini.gherkin.GherkinParserDefinition"/>
 	</extensions>
+
 
 	<actions>
 		<!-- Add your actions here -->
