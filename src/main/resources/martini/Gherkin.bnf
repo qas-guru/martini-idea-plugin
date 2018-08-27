@@ -11,10 +11,23 @@
   elementTypeHolderClass="guru.qas.martini.gherkin.psi.GherkinTypes"
   elementTypeClass="guru.qas.martini.gherkin.psi.GherkinElementType"
   tokenTypeClass="guru.qas.martini.gherkin.psi.GherkinTokenType"
+
+  tokens = [
+      KEYWORD_FEATURE='Feature'
+      KEYWORD_SEPARATOR=':'
+      space='regexp:\s+'
+      word='regexp:\w+'
+  ]
 }
 
-gherkinFile ::= item_*
 
-private item_ ::= (property|COMMENT|CRLF)
+gherkinFile ::= space? feature
+feature ::= KEYWORD_FEATURE space? ":" space? words
+words ::= {space|word}*
 
-property ::= (KEY? SEPARATOR VALUE?) | KEY
+
+//gherkinFile ::= item_*
+
+//private item_ ::= (property|COMMENT|CRLF)
+
+//property ::= (KEY? SEPARATOR VALUE?) | KEY
