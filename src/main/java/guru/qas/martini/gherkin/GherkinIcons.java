@@ -14,25 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package guru.qas.martini;
+package guru.qas.martini.gherkin;
 
 import javax.swing.Icon;
 
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.Messages;
+import com.intellij.openapi.util.IconLoader;
 
-public class HelloAction extends AnAction {
+public class GherkinIcons {
 
-	public HelloAction() {
-		super("Hello");
-	}
+	private static final Icon FEATURE_ICON = IconLoader.findIcon("/martini/icons/feature.png");
 
-	@Override
-	public void actionPerformed(AnActionEvent e) {
-		Project project = e.getProject();
-		Icon icon = Messages.getInformationIcon();
-		Messages.showMessageDialog(project, "Hallo welt!", "Gretings", icon);
+	public static final Icon getFeatureIcon() {
+		return FEATURE_ICON;
 	}
 }

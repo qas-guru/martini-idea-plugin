@@ -1,66 +1,31 @@
 <idea-plugin>
-	<id>guru.qas.martini-idea-plugin</id>
-	<name>Martini Plugin</name>
-	<version>0.0.1</version>
-	<vendor email="penny.curich@gmail.com" url="https://github.com/qas-guru">Quality Assurance Gurus</vendor>
+	<id>guru.qas</id>
+	<name>Martini IDEA Plugin</name>
+	<version>1.0</version>
+	<vendor url="https://mvnrepository.com/artifact/guru.qas"/>
 
 	<description><![CDATA[
-    Martini Support.<br>
-    ]]></description>
+		Enter short description for your plugin here.<br>
+		<em>most HTML tags may be used</em>
+	 ]]>
+	</description>
 
 	<change-notes><![CDATA[
-        Release 0.0.1: Initial release.<br>
-      ]]>
+		Add change notes here.<br>
+		<em>most HTML tags may be used</em>
+ 	]]>
 	</change-notes>
 
 	<!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-		 on how to target different products -->
-	<!-- uncomment to enable plugin in all products
-	<depends>com.intellij.modules.lang</depends>
-	-->
+	on how to target different products -->
+	<!--<depends>com.intellij.modules.lang</depends>-->
 
 	<extensions defaultExtensionNs="com.intellij">
-		<fileTypeFactory implementation="guru.qas.martini.intellij.plugin.gherkin.psi.GherkinFileTypeFactory"/>
-		<lang.syntaxHighlighterFactory language="Gherkin"
-									   implementationClass="org.jetbrains.plugins.cucumber.psi.GherkinSyntaxHighlighterFactory"/>
-
-		<lang.parserDefinition language="Gherkin"
-							   implementationClass="org.jetbrains.plugins.cucumber.psi.GherkinParserDefinition"/>
-		<lang.commenter language="Gherkin" implementationClass="org.jetbrains.plugins.cucumber.psi.GherkinCommenter"/>
-		<lang.psiStructureViewFactory language="Gherkin"
-									  implementationClass="guru.qas.martini.intellij.plugin.gherkin.psi.structure.GherkinStructureViewFactory"/>
-		<lang.formatter language="Gherkin"
-						implementationClass="org.jetbrains.plugins.cucumber.psi.formatter.GherkinFormattingModelBuilder"/>
-		<annotator language="Gherkin"
-				   implementationClass="guru.qas.martini.intellij.plugin.gherkin.psi.annotator.GherkinAnnotator"/>
-		<lang.foldingBuilder language="Gherkin"
-							 implementationClass="org.jetbrains.plugins.cucumber.psi.GherkinFoldingBuilder"/>
-		<langCodeStyleSettingsProvider
-				implementation="org.jetbrains.plugins.cucumber.psi.formatter.GherkinLanguageCodeStyleSettingsProvider"/>
-		<codeStyleSettingsProvider
-				implementation="org.jetbrains.plugins.cucumber.psi.formatter.GherkinCodeStyleSettingsProvider"/>
-
-		<lang.findUsagesProvider language="Gherkin"
-								 implementationClass="org.jetbrains.plugins.cucumber.psi.GherkinFindUsagesProvider"/>
-		<colorSettingsPage implementation="org.jetbrains.plugins.cucumber.psi.GherkinColorsPage"/>
-
-		<renameHandler
-				implementation="org.jetbrains.plugins.cucumber.psi.refactoring.rename.GherkinInplaceRenameHandler"/>
-		<renameHandler implementation="org.jetbrains.plugins.cucumber.psi.refactoring.rename.GherkinStepRenameHandler"/>
-
-
-		<renamePsiElementProcessor
-				implementation="org.jetbrains.plugins.cucumber.psi.refactoring.rename.CucumberStepRenameProcessor"
-				order="first"/>
-
-
+		<fileTypeFactory implementation="guru.qas.martini.gherkin.GherkinFileTypeFactory"/>
 	</extensions>
 
 	<actions>
 		<!-- Add your actions here -->
-		<group id="MartiniPlugin.SampleMenu" text="Greeting" description="Greeting menu">
-			<add-to-group group-id="MainMenu" anchor="last"/>
-			<action id="Myplugin.Textboxes" class="guru.qas.martini.HelloAction" text="Hello" description="Says hello"/>
-		</group>
 	</actions>
+
 </idea-plugin>

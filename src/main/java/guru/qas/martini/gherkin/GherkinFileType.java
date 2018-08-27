@@ -14,36 +14,33 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package guru.qas.martini.intellij.plugin.gherkin.psi;
+package guru.qas.martini.gherkin;
 
 import javax.swing.Icon;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.plugins.cucumber.psi.GherkinLanguage;
 
 import com.intellij.openapi.fileTypes.LanguageFileType;
-import com.intellij.openapi.util.IconLoader;
 
 public class GherkinFileType extends LanguageFileType {
 
-	public static final Icon ICON = IconLoader.getIcon("/guru/qas/martini/intellij/plugin/icons/jar-gray.png");
 	private static final GherkinFileType INSTANCE = new GherkinFileType();
 
-	private GherkinFileType() {
-		super(GherkinLanguage.INSTANCE);
+	public GherkinFileType() {
+		super(GherkinLanguage.getInstance());
 	}
 
 	@NotNull
 	@Override
 	public String getName() {
-		return "Gherkin";
+		return "Gherkin file";
 	}
 
 	@NotNull
 	@Override
 	public String getDescription() {
-		return "Gherkin feature file";
+		return "Gherkin language file";
 	}
 
 	@NotNull
@@ -55,7 +52,7 @@ public class GherkinFileType extends LanguageFileType {
 	@Nullable
 	@Override
 	public Icon getIcon() {
-		return ICON;
+		return GherkinIcons.getFeatureIcon();
 	}
 
 	public static GherkinFileType getInstance() {

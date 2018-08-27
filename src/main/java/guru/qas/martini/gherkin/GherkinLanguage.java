@@ -14,17 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package guru.qas.martini.intellij.plugin.gherkin.psi;
+package guru.qas.martini.gherkin;
 
-import org.jetbrains.annotations.NotNull;
+import com.intellij.lang.Language;
 
-import com.intellij.openapi.fileTypes.FileTypeConsumer;
-import com.intellij.openapi.fileTypes.FileTypeFactory;
+public class GherkinLanguage extends Language {
 
-public class GherkinFileTypeFactory extends FileTypeFactory {
+	private static final GherkinLanguage INSTANCE = new GherkinLanguage();
 
-	@Override
-	public void createFileTypes(@NotNull FileTypeConsumer fileTypeConsumer) {
-		fileTypeConsumer.consume(GherkinFileType.getInstance(), "feature");
+	public GherkinLanguage() {
+		super("Gherkin");
+	}
+
+	public static GherkinLanguage getInstance() {
+		return INSTANCE;
 	}
 }
