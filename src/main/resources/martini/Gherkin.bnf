@@ -22,14 +22,25 @@
 
 
 gherkinFile ::= space? feature
-feature ::= tags? KEYWORD_FEATURE separator title
+feature ::= tags? KEYWORD_FEATURE separator title scenarios?
 
 tags ::= {space|tag}*
 tag ::= '@' word modifier?
 modifier ::= "('" word "')"
 
 separator ::= space? ":" space?
-title ::= {space|word}*
+title ::= {space|word}+
+eol ::= '\r'? '\n'
+
+
+
+
+scenarios ::= {space|scenario}*
+scenario ::= space? tags? "Scenario" separator title steps?
+
+steps ::= {space|step}*
+step ::= space? step_keyword title
+step_keyword ::= 'Given' | 'When' | 'Then' | 'And' | 'But'
 
 
 //gherkinFile ::= item_*
